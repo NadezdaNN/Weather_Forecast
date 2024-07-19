@@ -1,0 +1,43 @@
+
+/* Добавляем оформление элементам grid-контейнера: */
+.container {
+    width: 30%;
+    height: 25%;
+    top: 33%;
+    left: 33%;   
+    position: absolute;
+    display: grid;
+    grid-template: 1fr 1fr 1fr 2fr/ 1fr;         
+    row-gap: 5%;
+}
+
+.A {
+    grid-area: 1 / 1 / 2 / 2;
+    justify-self: stretch; /* выравнивает грид-элементы по горизонтали */
+    align-self: start; /*выравнивает грид-элементы по вертикали*/    
+    text-align: center; /* Контент размещаем в центре по горизонтали */ 
+}
+.B {
+    grid-area: 2 / 1 / 3 / 2;
+    justify-self: stretch; /* выравнивает грид-элементы по горизонтали */
+    align-self: start;    
+}
+.C {
+    grid-area: 3 / 1 / 4 / 2;
+    justify-self: end; 
+    align-self: start;    
+}
+.D {
+    grid-area: 4 / 1 / 5 / 2;
+    justify-self: start; 
+    align-self: start;          
+}
+
+.neobut {
+	border-radius: 5px;
+	background-color: #f0f0f3;
+	box-shadow: 10px 10px 21px #d3d3d6,
+				-10px -10px 21px #fff;
+	transition: .3s all;
+	cursor: pointer;
+}
