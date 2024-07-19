@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Прогноз погоды</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='weatherForecast.css') }}">  
+  <script type=text/javascript src="{{ url_for('static', filename='jquery-3.7.0.min.js') }}"></script>   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/jquery-ui.js"></script>
+    <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.16/themes/ui-lightness/jquery-ui.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>   
+  <form action="/get_forecast" method="post" name="form">
+  <div class="container">
+      <div class="A"> 
+        <label> Введите название города или населенного пункта на территории РФ, для которого хотите получить прогноз погоды на ближайшее время: </label> 
+      </div>
+      <div class="B">         
+        <input type="text" id="name_city" name="name_city" value={{city}} onkeydown="if(event.keyCode==13) return false;" autocomplete="on" style="height:100%; width:100%">        
+      </div>
+      <div class="C"> 
+        <input type="button" class="neobut" value="ОК" style="height:25px; width:75px" onClick="forecast();">
+      </div>       
+      <div class="D" style="height:100%; width:100%">
+        <div class="D1" id="pred" style="font-weight: bold;"> </div>
+        <div class="D2" id="pred2" style="font-weight: bold;"> </div>
+        <div class="D3" id="pred3" style="font-weight: bold;"> </div>
+        <div class="D4" id="pred4" style="font-weight: bold;"> </div>
+      </div>
+  </div>  
+  </form>
+
+  <script>
+    $(function () {
+        var list = [
+          'Астрахань',
+          'Барнаул',
+          'Москва',
+          'Нижний Новгород',
+          'Санкт-Петербург',     
+          'Тверь'
+        ];
+        $("#name_city").autocomplete({
+            source: list
+        });
+        $("#name_city").autocomplete("enable");
+    });
+  </script>
+
+  <script>
+    $(document).ready(function(){    
+    $("#name_city").autocomplete([
+    'Астрахань',
+    'Барнаул',
+    'Москва',
+    'Нижний Новгород',
+    'Санкт-Петербург',     
+    'Тверь'],    
+        {
+          delay:3,
+          minChars:1,
+          matchSubset:1,
+          autoFill:true,
+          maxItemsToShow:10
+        }
+    );    
+    });
+  </script>
+
+  <script>  
+    function forecast() {
+      $.ajax({   
+        type: 'POST',              
+        url: "/get_forecast",
+        data: $('form').serialize(),                      
+        success: function(response) {
+            var json = jQuery.parseJSON(response)
+            $('#pred').html(json.pred) 
+            $('#pred2').html(json.pred2)
+            $('#pred3').html(json.pred3)
+            $('#pred4').html(json.pred4)     
+            console.log(response);          
+        },
+        error: function(error) {
+          console.log(error);
+        }
+      });
+    }
+  </script>
+</body>
+</html>
