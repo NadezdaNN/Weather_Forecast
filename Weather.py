@@ -68,6 +68,6 @@ def func_weather(arg):
         wind = str(round(hourly_wind_speed_10m[0],2)) # скорость ветра
         proba = str(hourly_precipitation_probability[0]) # вероятность выпадения осадков            
         
-        return (f"Температура воздуха: {temp} градусов С", f"Относительная влажность: {humidity} %", f"Скорость ветра: {wind} м/с", f"Вероятность выпадения осадков: {proba} %")
+        return (f"Температура воздуха: {temp} градусов цельсия", f"Относительная влажность: {humidity} %", f"Скорость ветра: {wind} м/с", f"Вероятность выпадения осадков: {proba} %")
     else:
         return (f"Город не найден", f" ", f" ", f" ")

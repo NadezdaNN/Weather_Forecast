@@ -8,14 +8,14 @@
     position: absolute;
     display: grid;
     grid-template: 1fr 1fr 1fr 2fr/ 1fr;         
-    row-gap: 5%;
+    row-gap: 10%;    
 }
 
 .A {
     grid-area: 1 / 1 / 2 / 2;
     justify-self: stretch; /* выравнивает грид-элементы по горизонтали */
     align-self: start; /*выравнивает грид-элементы по вертикали*/    
-    text-align: center; /* Контент размещаем в центре по горизонтали */ 
+    text-align: justify; /* Контент размещаем в центре по горизонтали */ 
 }
 .B {
     grid-area: 2 / 1 / 3 / 2;
@@ -41,3 +41,5 @@
 	transition: .3s all;
 	cursor: pointer;
 }
+
+body { background: url(1.png) repeat 0 0; }

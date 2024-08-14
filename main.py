@@ -6,16 +6,33 @@ from PyQt5.QtCore import QSettings
 
 app = Flask(__name__, static_folder="static")
 
-settings = QSettings("my_city_name")     
+settings = QSettings("my_city_name")  
+city_dict = {}
+
+@app.route('/count/<name_city>', methods=['POST'])
+def count(name_city): # получить кол-во обращений по названию города 
+    if request.method == 'POST':        
+        city_dict = settings.value("city_name_for_api")                 
+        try:            
+            return json.dumps({str(name_city): city_dict[name_city]}), 200
+        except:            
+            return json.dumps({"Нет такого города": 0}), 200
+    
 
 @app.route('/get_forecast', methods=['GET', 'POST'])
 def get_forecast():     
     if request.method == 'POST': 
         name_city = request.form['name_city']        
-        settings.setValue("my_city_name", str(name_city))                    
-        pred = func_weather(name_city) # получение прогноза        
-        
-        return json.dumps({'pred': pred[0], 'pred2': pred[1], 'pred3': pred[2], 'pred4': pred[3]})
+        settings.setValue("my_city_name", str(name_city))  
+        city_dict = settings.value("city_name_for_api") 
+        try: 
+            city_dict[name_city] = city_dict[name_city] + 1            
+        except:            
+            city_dict[name_city] = 1          
+        finally:             
+            settings.setValue("city_name_for_api", city_dict)            
+            pred = func_weather(name_city) # получение прогноза               
+            return json.dumps({'pred': pred[0], 'pred2': pred[1], 'pred3': pred[2], 'pred4': pred[3]})
     
 
 @app.route('/start')  
@@ -26,4 +43,4 @@ def start():
 
 if __name__ == "__main__":          
     webbrowser.open_new("http://127.0.0.1:5000/start")
-    app.run() 
+    app.run() # debug=True
