@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 import json
-#import webbrowser
+import webbrowser
 from Weather import func_weather
 from PyQt5.QtCore import QSettings
 
@@ -45,5 +45,5 @@ def start():
     
 
 if __name__ == "__main__": 
-    #webbrowser.open_new("http://0.0.0.0:5000/start")
-    app.run(host='127.0.0.1', port=5000) # debug=True host='0.0.0.0', port=5000
+    webbrowser.open_new("http://127.0.0.1:5000/")
+    app.run() # debug=True host='0.0.0.0', port=5000
